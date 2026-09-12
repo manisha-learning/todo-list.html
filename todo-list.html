@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My To-Do List</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.app {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    border-radius: 22px;
+    padding: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+h1 {
+    text-align: center;
+    font-size: 26px;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.input-box {
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #2ecc71;
+}
+
+.add-btn {
+    border: none;
+    background: #2ecc71;
+    color: white;
+    padding: 0 18px;
+    border-radius: 12px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+    margin-top: 25px;
+}
+
+li {
+    background: #f7f9f8;
+    margin-bottom: 10px;
+    padding: 14px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+}
+
+.task-text {
+    flex: 1;
+}
+
+.completed .task-text {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.check {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.delete-btn {
+    border: none;
+    background: #ff5c5c;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+.credit {
+    text-align: center;
+    margin-top: 20px;
+    color: #888;
+    font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+    <h1>MY TO-DO LIST</h1>
+    <p class="subtitle">Plan your day. Get things done.</p>
+
+    <div class="input-box">
+        <input type="text" id="taskInput" placeholder="Add a new task...">
+        <button class="add-btn" onclick="addTask()">+</button>
+    </div>
+
+    <ul id="taskList"></ul>
+
+    <div class="credit">
+        Created by <b>Manisha Khangar</b>
+    </div>
+</div>
+
+<script>
+function addTask() {
+    const input = document.getElementById("taskInput");
+    const taskText = input.value.trim();
+
+    if (taskText === "") {
+        alert("Please enter a task!");
+        return;
+    }
+
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+        <input type="checkbox" class="check">
+        <span class="task-text">${taskText}</span>
+        <button class="delete-btn">✕</button>
+    `;
+
+    const checkbox = li.querySelector(".check");
+    checkbox.addEventListener("change", function() {
+        li.classList.toggle("completed");
+    });
+
+    const deleteBtn = li.querySelector(".delete-btn");
+    deleteBtn.addEventListener("click", function() {
+        li.remove();
+    });
+
+    document.getElementById("taskList").appendChild(li);
+    input.value = "";
+}
+
+document.getElementById("taskInput").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        addTask();
+    }
+});
+</script>
+
+</body>
+</html>
